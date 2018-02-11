@@ -30,7 +30,7 @@ def get_image(image_path, input_height, input_width,
                    resize_height, resize_width, crop)
 
 def save_images(images, size, image_path):
-  return imsave(inverse_transform(images), size, image_path)
+  return imsave(inverse_transform(binary_transform(images)), size, image_path)
 
 def imread(path, grayscale = False):
   if (grayscale):
@@ -88,6 +88,10 @@ def transform(image, input_height, input_width,
 
 def inverse_transform(images):
   return (images+1.)/2.
+
+# Converts all pixels to either black or white.
+def binary_transform(images):
+  return np.around(images, decimals=0)
 
 def to_json(output_path, *layers):
   with open(output_path, "w") as layer_f:

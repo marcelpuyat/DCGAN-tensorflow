@@ -71,7 +71,7 @@ class DCGAN(object):
     self.checkpoint_dir = checkpoint_dir
 
     if self.dataset_name == 'mnist':
-      self.data_X, self.data_y = self.load_mnist()
+      self.data_X, self.data_y = self.load_mnist_black_and_white()
       self.c_dim = self.data_X[0].shape[-1]
     else:
       self.data = glob(os.path.join("./data", self.dataset_name, self.input_fname_pattern))
@@ -486,6 +486,10 @@ class DCGAN(object):
       y_vec[i,y[i]] = 1.0
     
     return X/255.,y_vec
+
+  def load_mnist_black_and_white(self):
+    mnistX, mnistY = self.load_mnist()
+    return np.around(mnistX, decimals=0), mnistY
 
   @property
   def model_dir(self):
